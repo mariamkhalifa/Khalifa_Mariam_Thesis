@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var User = require('../models/User.js');
+var Lesson = require('../models/Lesson.js');
 
 
 // user auth routes
@@ -12,29 +13,17 @@ function isLoggedIn(req, res, next) {
 	return res.redirect('/');
 }
 
-router.get('/', function(req, res, next) {
-  res.render('login', { title: 'Log In' });
-});
-
-router.get('/register', function(req, res, next) {
-  res.render('register', { title: 'Register' });
-});
-
-router.get('/home', function(req, res, next) {
-  res.send('logged in!');
-});
-
-
 router.post('/login', passport.authenticate('local'), function(req, res, next) {
 	if(!req.user) {
 		//res.redirect('/');
-    res.send('failed');
+    res.send('failed')
 	}
   //res.redirect('/home');
-  res.send('sucess');
+  res.json(req.user.username);
 });
 
 router.post('/register', function(req, res, next) {
+  console.log(req.body.username);
 	User.register(new User({
 		username:req.body.username,
 		email:req.body.email}),
@@ -51,10 +40,14 @@ router.post('/register', function(req, res, next) {
 	});
 });
 
-router.get('/protected', isLoggedIn, function(req, res, next){
-	console.log(req.user.username);
-	res.render('protected',{title:'profile page', name:req.user.username});
+// lesson api routes
+router.get('/api/lessons', function(req, res, next) {
+  Lesson.find(function (err, lessons) {
+    if (err) return next(err);
+	res.json(lessons);
+  });
 });
+
 
 // student api routes
 router.get('/api/students', function(req, res, next) {
