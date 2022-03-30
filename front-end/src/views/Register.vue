@@ -1,10 +1,8 @@
 <template>
   <section>
-    <h2 class="main-heading">Login</h2>
+    <h2 class="main-heading">Register</h2>
 
-    <form ref="loginForm" method="POST">
-
-      <p>{{ error }}</p>
+    <form ref="registerForm" method="POST">
 
       <div class="form-group">
         <label for="username">Username:</label>
@@ -12,11 +10,16 @@
       </div>
 
       <div class="form-group">
+        <label for="email">Email:</label>
+        <input v-model="email" id="email" name="email" type="email" placeholder="Enter your email...">
+      </div>
+
+      <div class="form-group">
         <label for="password">Password:</label>
         <input v-model="password" id="password" name="password" type="password" placeholder="Enter your password...">
       </div>
 
-      <input @click.prevent="loginUser" type="submit" value="Login">
+      <input @click.prevent="regsiterUser" type="submit" value="Register">
 
     </form>
   </section>
@@ -29,32 +32,27 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      error: null,
+      errors: null,
       processing: null,
       username: null,
-      password: null
+      password: null,
+      email: null
 
     }
   },
 
   methods: {
-    loginUser() {
-
-      let url = `http://localhost:${process.env.VUE_APP_API_PORT}/login`;
+    regsiterUser() {
+      
+      let url = `http://localhost:${process.env.VUE_APP_API_PORT}/register`;
 
       axios.post(url, { 
         'username': this.username,
+        'email': this.email,
         'password': this.password
-       })
+      })
       .then(response=>{
         console.log(response);
-        this.$store.commit('islogged', true);
-        if(response.data === 'failed') {
-          this.error = 'User does not exist. Please regsiter first.';
-        }
-        else {
-          this.$router.push({name: 'home', params: { username: response.data }});
-        }
       })
       .catch(err=>console.log(err));
       
