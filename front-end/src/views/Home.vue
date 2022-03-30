@@ -1,8 +1,8 @@
 <template>
   <section>
     <h2>Home</h2>
-    <h3>Hello {{ username }}</h3>
-    <nav-menu></nav-menu>
+    <h3>Hello {{ username}}</h3>
+    <p>{{ isLogged }}</p>
   </section>
 </template>
 
@@ -10,15 +10,14 @@
 import axios from 'axios';
 import NavMenu from './../components/navMenu.vue'; 
 export default {
-  components: {
-    NavMenu
-  },
-
   props: ['username'],
 
-  data() {
-    return {
-      lessons: []
+  created() {
+    
+    let isLogged = this.$store.state.isLogged;
+
+    if(isLogged === false) {
+      this.$router.push('/login');
     }
   },
 
