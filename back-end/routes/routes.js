@@ -14,15 +14,12 @@ function isLoggedIn(req, res, next) {
 
 router.post('/login', passport.authenticate('local'), function(req, res, next) {
 	if(!req.user) {
-		//res.redirect('/');
     res.send('failed')
 	}
-  //res.redirect('/home');
   res.json(req.user.username);
 });
 
 router.post('/register', function(req, res, next) {
-  console.log(req.body.username);
 	User.register(new User({
 		username:req.body.username,
 		email:req.body.email}),
@@ -30,11 +27,11 @@ router.post('/register', function(req, res, next) {
 
 		function(err, user) {
 		if (err) {
-			res.render('register',{title: 'Register',user:user});
+			res.send('Failed')
 		}
     //automatically logs in any new user
 		passport.authenticate('local')(req, res, function() {
-			res.redirect('/home');
+			res.json(res.username);
 		});
 	});
 });
