@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var User = require('../models/User.js');
+var Lesson = require('../models/Lesson.js');
 
 
 // user auth routes
@@ -16,10 +17,12 @@ router.post('/login', passport.authenticate('local'), function(req, res, next) {
 	if(!req.user) {
     res.send('failed')
 	}
+
   res.json(req.user.username);
 });
 
 router.post('/register', function(req, res, next) {
+  console.log(req.body.username);
 	User.register(new User({
 		username:req.body.username,
 		email:req.body.email}),

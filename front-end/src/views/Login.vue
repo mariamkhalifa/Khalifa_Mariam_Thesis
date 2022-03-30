@@ -50,6 +50,7 @@ export default {
        })
       .then(response=>{
         console.log(response);
+
         if(response.data === 'failed') {
           this.error = 'User does not exist. Please regsiter first.';
         }
