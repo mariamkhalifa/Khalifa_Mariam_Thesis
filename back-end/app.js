@@ -30,7 +30,8 @@ var app = express();
 //Allow Cors
 
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Origin", "http://localhost:8002");// update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Credentials", "true");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
@@ -47,8 +48,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(expressSession({ secret: 'ValiantSpaceDogs', resave: false,
-  saveUninitialized: true, key: 'sid' }));
+app.use(expressSession({ 
+  secret: 'ValiantSpaceDogs', 
+  resave: false,
+  saveUninitialized: true, 
+  key: 'sid',
+  cookie: {domain: 'localhost:8002'}
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 

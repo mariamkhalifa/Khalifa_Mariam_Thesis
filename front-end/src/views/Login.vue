@@ -43,7 +43,7 @@ export default {
     loginUser() {
 
       let url = `http://localhost:${process.env.VUE_APP_API_PORT}/login`;
-
+      axios.defaults.withCredentials = true;
       axios.post(url, { 
         'username': this.username,
         'password': this.password
