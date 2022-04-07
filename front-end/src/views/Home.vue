@@ -1,5 +1,6 @@
 <template>
   <section>
+    <header-comp></header-comp>
     <h2>Home</h2>
     <h3>Hello {{ username}}</h3>
     
@@ -8,11 +9,14 @@
 
 <script>
 import axios from 'axios';
-
+import headerComp from './../components/headerComp.vue';
 
 export default {
-  //props: ['username'],
+  props: ['username'],
 
+  components: {
+      headerComp
+  },
 
   data() {
     return {
@@ -20,20 +24,22 @@ export default {
     }
   },
 
+  
+
 
   created() {
     // confirm user is logged
-    // let isLogged = this.$store.state.isLogged;
+    let isLogged = this.$store.state.isLogged;
 
-    // if(isLogged === false) {
-    //   this.$router.push('/login');
-    // }
+    if(isLogged === false) {
+      this.$router.push('/login');
+    }
 
     // confirm authentication
     axios.get(`http://localhost:${process.env.VUE_APP_API_PORT}/protected`)
     .then(response=>{
         console.log(response);
-        this.username = response.data;
+        //this.username = response.data;
       })
       .catch(err=>console.log(err));
 
