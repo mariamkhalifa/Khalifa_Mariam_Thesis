@@ -19,6 +19,8 @@
       <input @click.prevent="loginUser" type="submit" value="Login">
 
     </form>
+
+    <router-link to="/register">Register instead?</router-link>
   </section>
     
 </template>
@@ -48,7 +50,7 @@ export default {
        })
       .then(response=>{
         console.log(response);
-        //this.$store.commit('islogged', true);
+        this.$store.commit('isLogged', true);
         if(response.data === 'failed') {
           this.error = 'User does not exist. Please regsiter first.';
         }
