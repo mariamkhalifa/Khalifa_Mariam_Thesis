@@ -4,6 +4,8 @@
 
     <form ref="registerForm" method="POST">
 
+       <p>{{ error }}</p>
+
       <div class="form-group">
         <label for="username">Username:</label>
         <input v-model="username" id="username" name="username" type="text" placeholder="Enter your username...">
@@ -32,12 +34,11 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      errors: null,
+      error: null,
       processing: null,
       username: null,
       password: null,
       email: null
-
     }
   },
 
@@ -53,6 +54,13 @@ export default {
       })
       .then(response=>{
         console.log(response);
+        if(response.data === 'Failed') {
+          this.error = 'Sorry! something went wrong!'
+        }
+        else {
+          this.$store.commit('isLogged', true);
+          this.$router.push({name: 'home', params: { username: response.data } });
+        }
       })
       .catch(err=>console.log(err));
       

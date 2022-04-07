@@ -13,7 +13,11 @@ const store = new Vuex.Store({
   state: {
     isLogged: false,
   },
-  mutations: {},
+  mutations: {
+    isLogged(state, status) {
+      state.isLogged = status;
+    }
+  },
   actions: {}
 });
 

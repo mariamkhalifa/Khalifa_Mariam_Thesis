@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var User = require('../models/User.js');
+var Lesson = require('../models/Lesson.js');
 
 
 // user auth routes
@@ -9,16 +10,14 @@ function isLoggedIn(req, res, next) {
 	if(req.isAuthenticated()) {
 		return next();
 	}
-	return res.redirect('/');
+	return res.send('failed');
 }
 
 router.post('/login', passport.authenticate('local'), function(req, res, next) {
 	if(!req.user) {
-		//res.redirect('/');
     res.send('failed')
 	}
-  //res.redirect('/home');
-  res.json(req.user.username);
+  res.send('success');
 });
 
 router.post('/register', function(req, res, next) {
@@ -30,13 +29,31 @@ router.post('/register', function(req, res, next) {
 
 		function(err, user) {
 		if (err) {
-			res.render('register',{title: 'Register',user:user});
+			res.send('Failed')
 		}
     //automatically logs in any new user
 		passport.authenticate('local')(req, res, function() {
-			res.redirect('/home');
+			res.json(res.username);
 		});
 	});
+});
+
+router.get('/protected', isLoggedIn, function(req, res, next){
+	//console.log(req.user.username);
+	res.json(req.user.username);
+});
+
+app.post('/logout', function(req, res){
+  req.logout();
+  res.send('success');
+});
+
+// lesson api routes
+router.get('/api/lessons', function(req, res, next) {
+  Lesson.find(function (err, lessons) {
+    if (err) return next(err);
+	res.json(lessons);
+  });
 });
 
 
