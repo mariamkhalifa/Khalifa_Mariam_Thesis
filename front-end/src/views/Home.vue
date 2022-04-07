@@ -9,14 +9,17 @@
 <script>
 import axios from 'axios';
 
+
 export default {
   //props: ['username'],
+
 
   data() {
     return {
       lessons: []
     }
   },
+
 
   created() {
     // confirm user is logged
@@ -46,9 +49,19 @@ export default {
   },
 
 
+ 
+    let url = `http://localhost:${process.env.VUE_APP_API_PORT}/api/lessons`;
+
+      axios.get(url)
+      .then(response=>{
+        console.log(response);
+        this.lessons = response.data;
+      })
+      .catch(err=>console.log(err));
+  
 };
 
-//use to get id from route this.$route.params.id
+
 </script>
 
 <style>

@@ -1,3 +1,4 @@
+
 var mongoose = require('mongoose');
 
 var LessonSchema = new mongoose.Schema({
@@ -5,6 +6,8 @@ var LessonSchema = new mongoose.Schema({
   name: String,
   video: String,
   completed: { type: Boolean, default: false }
+  video: String
+
 });
 
 module.exports = mongoose.model('Lesson', LessonSchema);

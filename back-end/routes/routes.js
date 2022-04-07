@@ -17,7 +17,7 @@ router.post('/login', passport.authenticate('local'), function(req, res, next) {
 	if(!req.user) {
     res.send('failed')
 	}
-  res.send('success');
+  res.json(req.user.username);
 });
 
 router.post('/register', function(req, res, next) {
@@ -37,6 +37,7 @@ router.post('/register', function(req, res, next) {
 		});
 	});
 });
+
 
 router.get('/protected', isLoggedIn, function(req, res, next){
 	//console.log(req.user.username);
