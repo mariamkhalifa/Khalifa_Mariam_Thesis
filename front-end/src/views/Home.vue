@@ -46,19 +46,7 @@ export default {
         this.lessons = response.data;
       })
       .catch(err=>console.log(err));
-  },
-
-
- 
-    let url = `http://localhost:${process.env.VUE_APP_API_PORT}/api/lessons`;
-
-      axios.get(url)
-      .then(response=>{
-        console.log(response);
-        this.lessons = response.data;
-      })
-      .catch(err=>console.log(err));
-  
+  }
 };
 
 

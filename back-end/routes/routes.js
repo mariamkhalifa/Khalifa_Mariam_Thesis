@@ -44,7 +44,7 @@ router.get('/protected', isLoggedIn, function(req, res, next){
 	res.json(req.user.username);
 });
 
-app.post('/logout', function(req, res){
+router.post('/logout', function(req, res){
   req.logout();
   res.send('success');
 });

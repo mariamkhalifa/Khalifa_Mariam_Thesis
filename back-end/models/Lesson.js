@@ -6,7 +6,6 @@ var LessonSchema = new mongoose.Schema({
   name: String,
   video: String,
   completed: { type: Boolean, default: false }
-  video: String
 
 });
 
