@@ -1,6 +1,6 @@
 <template>
   <header>
-    <img src="" alt="logo">
+    <img class="logo" src="/static/logo.svg" alt="logo">
     <nav-menu></nav-menu>
   </header>
 </template>
@@ -16,5 +16,7 @@ export default {
 
 
 <style lang="scss">
-
+  .logo {
+    width: 50px;
+  }
 </style>

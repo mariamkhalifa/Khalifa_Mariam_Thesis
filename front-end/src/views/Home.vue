@@ -1,21 +1,25 @@
 <template>
   <section>
     <header-comp></header-comp>
+    
     <h2>Home</h2>
     <h3>Hello {{ username}}</h3>
-    
+
+    <all-lessons :username="username"></all-lessons>
   </section>
 </template>
 
 <script>
 import axios from 'axios';
 import headerComp from './../components/headerComp.vue';
+import allLessons from './../components/allLessons.vue';
 
 export default {
   props: ['username'],
 
   components: {
-      headerComp
+      headerComp,
+      allLessons
   },
 
   data() {
@@ -38,20 +42,18 @@ export default {
     // confirm authentication
     axios.get(`http://localhost:${process.env.VUE_APP_API_PORT}/protected`)
     .then(response=>{
-        console.log(response);
-        //this.username = response.data;
+        console.log(response.data);
+        // this.username = response.data;
       })
-      .catch(err=>console.log(err));
+    .catch(err=>console.log(err));
 
-    // db call 
-    let url = `http://localhost:${process.env.VUE_APP_API_PORT}/api/lessons`;
-
-      axios.get(url)
-      .then(response=>{
-        console.log(response);
-        this.lessons = response.data;
+    // get user id
+    axios.get(`http://localhost:${process.env.VUE_APP_API_PORT}/user/${this.username}`)
+    .then(response=>{
+        console.log(response.data);
+        this.$store.commit('userId', response.data._id);
       })
-      .catch(err=>console.log(err));
+    .catch(err=>console.log(err));
   }
 };
 
