@@ -67,13 +67,14 @@ router.get('/user/:username', function(req, res, next) {
 
 router.post('/user/:id/lesson-end', function(req, res, next) {
   User.findOneAndUpdate(
-    req.params.id, 
-    { $addToSet: { completed: req.body.finishedLesson }, $push: { totalPoints: 5 }}, 
+    req.params.id, { 
+      $addToSet: { completed: req.body.finishedLesson }, 
+      $push: { totalPoints: 5 },
+    }, 
     function (err, post) {
       if (err) return next(err);
       res.json(post);
   });
-  
 });
 
 

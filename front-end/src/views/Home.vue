@@ -42,7 +42,7 @@ export default {
     // confirm authentication
     axios.get(`http://localhost:${process.env.VUE_APP_API_PORT}/protected`)
     .then(response=>{
-        console.log(response.data);
+        //console.log(response.data);
         // this.username = response.data;
       })
     .catch(err=>console.log(err));
@@ -50,7 +50,7 @@ export default {
     // get user id
     axios.get(`http://localhost:${process.env.VUE_APP_API_PORT}/user/${this.username}`)
     .then(response=>{
-        console.log(response.data);
+        //console.log(response.data);
         this.$store.commit('userId', response.data._id);
       })
     .catch(err=>console.log(err));

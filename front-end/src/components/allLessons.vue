@@ -19,7 +19,6 @@ export default {
   data() {
     return {
       lessons: [],
-      complete: false
     }
   },
 
@@ -35,7 +34,7 @@ export default {
 
       axios.get(url)
       .then(response=>{
-        console.log(response);
+        //console.log(response);
         this.lessons = response.data;
       })
       .catch(err=>console.log(err));
@@ -43,8 +42,8 @@ export default {
 
   methods: {
     lessonEnd() {
-      console.log('ended');
-      console.log(event.currentTarget);
+      //console.log('ended');
+      //console.log(event.currentTarget);
 
       //console.log(this.userId);
       //console.log(event.currentTarget.dataset.lesson);
@@ -56,8 +55,8 @@ export default {
         finishedLesson
       })
       .then(response=>{
-        console.log(response.data);
-        this.complete = true
+        //console.log(response.data);
+        event.currentTarget.style.opacity = .5;
       })
       .catch(err=>console.log(err));
     }
@@ -68,6 +67,6 @@ export default {
 
 <style lang="scss">
   video {
-    width: 100%;
+    width: 50%;
   }
 </style>
