@@ -33,7 +33,7 @@ router.post('/register', function(req, res, next) {
 		}
     //automatically logs in any new user
 		passport.authenticate('local')(req, res, function() {
-			res.json(res.username);
+			res.json(user.username);
 		});
 	});
 });
@@ -54,6 +54,26 @@ router.get('/api/lessons', function(req, res, next) {
   Lesson.find(function (err, lessons) {
     if (err) return next(err);
 	res.json(lessons);
+  });
+});
+
+// user routes
+router.get('/user/:username', function(req, res, next) {
+  User.findOne({ username : req.params.username }, function (err, user) {
+    if (err) return next(err);
+	res.json(user);
+  });
+});
+
+router.post('/user/:id/lesson-end', function(req, res, next) {
+  User.findOneAndUpdate(
+    req.params.id, { 
+      $addToSet: { completed: req.body.finishedLesson }, 
+      $push: { totalPoints: 5 },
+    }, 
+    function (err, post) {
+      if (err) return next(err);
+      res.json(post);
   });
 });
 
