@@ -25,6 +25,9 @@ export default {
   computed: {
     userId() {
       return this.$store.state.userId;
+    },
+    completed() {
+      return this.$store.state.completed;
     }
   },
 
@@ -56,7 +59,10 @@ export default {
       })
       .then(response=>{
         //console.log(response.data);
-        event.currentTarget.style.opacity = .5;
+        //event.currentTarget.style.opacity = .5;
+        this.$store.dispatch('addToCompleted', this.finishedLesson);
+        this.$store.dispatch('addToTotalPoints', 5);
+        this.$emit('updateKey');
       })
       .catch(err=>console.log(err));
     }

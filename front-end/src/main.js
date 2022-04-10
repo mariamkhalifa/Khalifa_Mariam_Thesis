@@ -14,7 +14,7 @@ const store = new Vuex.Store({
     isLogged: false,
     userId: null,
     completed: [],
-    totalPoints: null,
+    totalPoints: [],
     dailyPoints: null,
     dailyGoal: null
   },
@@ -24,9 +24,26 @@ const store = new Vuex.Store({
     },
     userId(state, id) {
       state.userId = id;
+    },
+    updateCompleted(state, myData) {
+      state.completed = myData;
+    },
+    updateTotalPoints(state, myData) {
+      state.totalPoints = myData;
     }
   },
-  actions: {}
+  actions: {
+    addToCompleted(context, payload) {
+      const completed = context.state.completed;
+      completed.push(payload);
+      context.commit('updateCompleted', completed);
+    },
+    addToTotalPoints(context, payload){
+      const totalPoints = context.state.totalPoints;
+      totalPoints.push(payload);
+      context.commit('updateTotalPoints', totalPoints);
+    } 
+  }
 });
 
 new Vue({
