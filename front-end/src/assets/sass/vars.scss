@@ -1,0 +1,28 @@
+
+$black: #0d0d0d;
+$white: #f4f4f9;
+$grey: #8a989f;
+$darkBlue: #2f4550;
+$mediumBlue: #586f7c;
+$lightBlue: #b8dbd9;
+
+$font: 'Quicksand', sans-serif;
+
+@mixin transitionEase {
+    transition: all .5s ease;
+}
+
+@mixin transitionEaseInOut {
+    transition: all .5s ease-in-out;
+}
+
+@mixin row {
+    display: flex;
+    flex-direction: row;
+}
+
+@mixin col {
+    display: flex;
+    flex-direction: column;
+}
+

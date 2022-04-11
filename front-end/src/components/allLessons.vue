@@ -1,8 +1,9 @@
 <template>
-  <ul>
-    <li v-for="(lesson, index) in lessons" :key="index">
+  <ul class="lesson-list">
+    <li @click="showVideo" v-for="(lesson, index) in lessons" :key="index">
       <h4>{{ lesson.name }}</h4>
-      <video @ended="lessonEnd" :data-lesson="lesson._id" controls>
+      <img class="video-placeholder" src="/static/video-placeholder3.svg" alt="video icon">
+      <video v-if="showVideo" @ended="lessonEnd" :data-lesson="lesson._id" controls>
         <source :src="`/static/${lesson.video}.mp4`" type="video/mp4">
         <source :src="`/static/${lesson.video}.ogg`" type="video/mp4"> 
         Your browser does not support video.
@@ -19,6 +20,7 @@ export default {
   data() {
     return {
       lessons: [],
+      showVideo: false
     }
   },
 
@@ -44,6 +46,10 @@ export default {
   },
 
   methods: {
+    showVideo() {
+      this.showVideo = true;
+    },
+
     lessonEnd() {
       //console.log('ended');
       //console.log(event.currentTarget);
@@ -72,7 +78,38 @@ export default {
 
 
 <style lang="scss">
-  video {
-    width: 50%;
+@import './../assets/sass/vars.scss';
+
+  .lesson-list {
+    @include row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 80vw;
+    margin: 40px auto 150px;
+
+    li {
+      margin: 0 auto;
+      width: 300px;
+      cursor: pointer;
+    }
+
+    h4 {
+      text-align: center;
+      position: relative;
+      top: 55px;
+      color: $darkBlue;
+      font-size: 1.7em;
+      font-weight: bold;
+    }
+
+    .video-placeholder {
+      width: 100%;
+    }
+
+    video {
+      width: 100%;
+    }
   }
+
+  
 </style>

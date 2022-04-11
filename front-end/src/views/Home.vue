@@ -2,8 +2,10 @@
   <section>
     <header-comp></header-comp>
     
-    <h2>Home</h2>
+    <h2 class="hidden">Home</h2>
     <h3>Hello {{ username}}</h3>
+
+    <tabs-menu></tabs-menu>
 
     <total-points-comp :key="key"></total-points-comp>
 
@@ -14,6 +16,7 @@
 <script>
 import axios from 'axios';
 import headerComp from './../components/headerComp.vue';
+import tabsMenu from './../components/tabsMenu.vue';
 import allLessons from './../components/allLessons.vue';
 import totalPointsComp from './../components/totalPointsComp.vue';
 
@@ -22,6 +25,7 @@ export default {
 
   components: {
       headerComp,
+      tabsMenu,
       allLessons,
       totalPointsComp
   },
@@ -33,13 +37,13 @@ export default {
     }
   },
 
-  created() {
+  mounted() {
     // confirm user is logged
     let isLogged = this.$store.state.isLogged;
 
-    if(isLogged === false) {
-      this.$router.push('/login');
-    }
+    // if(isLogged === false) {
+    //   this.$router.push('/login');
+    // }
 
     // confirm authentication
     axios.get(`http://localhost:${process.env.VUE_APP_API_PORT}/protected`)
@@ -70,6 +74,7 @@ export default {
 
 </script>
 
-<style>
+<style lang="scss">
+@import './../assets/sass/vars.scss';
 
 </style>
