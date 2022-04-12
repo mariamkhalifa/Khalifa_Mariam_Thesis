@@ -17,7 +17,7 @@
 import axios from 'axios';
 import headerComp from './../components/headerComp.vue';
 import tabsMenu from './../components/tabsMenu.vue';
-import allLessons from './../components/allLessons.vue';
+import allLessons from '../components/allLessons.vue';
 import totalPointsComp from './../components/totalPointsComp.vue';
 
 export default {
