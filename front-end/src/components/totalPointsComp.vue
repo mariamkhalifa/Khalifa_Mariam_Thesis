@@ -1,7 +1,9 @@
 <template>
-  <section>
-    <h4>Total Points</h4>
-    <p>{{ totalPoints }}</p>
+  <section class="points-con">
+    <h4>Exp. Points: <span>{{ totalPoints }}</span></h4>
+    <div class="total-points-meter">
+      <div ref="bar" class="total-points"></div>
+    </div>
   </section>
 </template>
 
@@ -17,7 +19,10 @@ export default {
       let initialV = 0;
       return this.totalPointsArray.reduce((previousV,currentV)=>previousV + currentV, initialV);
     }
+  },
 
+  mounted() {
+    this.$refs.bar.style.width = `${this.totalPoints}%`;
   }
 
   
@@ -26,5 +31,52 @@ export default {
 
 
 <style lang="scss">
-  
+@import './../assets/sass/vars.scss';
+  .points-con {
+    @include row;
+    align-items: center;
+    margin-top: 20px;
+    margin-left: 20px;
+    font-size: 1.2em;
+
+    h4 {
+      font-weight: bold;
+      color: $darkBlue;
+    }
+  }
+
+  .total-points-meter {
+    width: 200px;
+    height: 30px;
+    border-radius: 5px;
+    border: 2px solid $darkBlue;
+    //margin-top: 30px;
+    margin-left: 50px;
+    position: relative;
+
+    &:before {
+      content: 'Lv. 1';
+      position: absolute;
+      top: -5px;
+      left: -35px;
+      font-size: 12px;
+      color: $darkBlue;
+    }
+
+    &:after {
+      content: 'Lv. 2';
+      position: absolute;
+      bottom: -5px;
+      right: -35px;
+      font-size: 12px;
+      color: $darkBlue;
+    }
+
+    .total-points {
+      background-color: $lightBlue;
+      border-radius: 3px;
+      width: 0;
+      height: 30px;
+    }
+  }
 </style>
