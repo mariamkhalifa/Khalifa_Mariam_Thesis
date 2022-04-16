@@ -60,6 +60,7 @@ export default {
         else {
           console.log(response.data.token);
           localStorage.setItem('userToken', response.data.token);
+          localStorage.setItem('username', response.data.username);
           localStorage.setItem('userId', response.data._id);
           this.$router.push('/');
         }

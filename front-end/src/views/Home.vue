@@ -3,7 +3,7 @@
     <header-comp></header-comp>
     
     <h2 class="hidden">Home</h2>
-    <h3>Hello {{ username}}</h3>
+    <h3 class="welcome-msg">Hello {{ username}}</h3>
 
     <tabs-menu></tabs-menu>
 
@@ -21,7 +21,11 @@ import allLessons from '../components/allLessons.vue';
 import totalPointsComp from './../components/totalPointsComp.vue';
 
 export default {
-  props: ['username'],
+  computed: {
+    username() {
+      return localStorage.getItem('username');
+    }
+  },
 
   components: {
       headerComp,
@@ -42,13 +46,7 @@ export default {
     let token = localStorage.getItem('userToken');
     if (!token) {
       this.$router.push('/login');
-    } else {
-      console.log('authnticated');
     }
-
-    
-
-    
   },
 
   methods: {
@@ -57,11 +55,15 @@ export default {
     }
   }
 };
-
-
 </script>
 
 <style lang="scss">
 @import './../assets/sass/vars.scss';
-
+  .welcome-msg {
+    margin-left: 20px;
+    margin-top: 40px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: $mediumBlue;
+  }
 </style>
