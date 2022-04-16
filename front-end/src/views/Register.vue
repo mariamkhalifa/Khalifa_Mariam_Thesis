@@ -58,17 +58,16 @@ export default {
           this.error = 'Sorry! something went wrong!'
         }
         else {
-          this.$store.commit('isLogged', true);
-          this.$router.push({name: 'home', params: { username: response.data } });
+          console.log(response.data.token);
+          localStorage.setItem('userToken', response.data.token);
+          localStorage.setItem('userId', response.data._id);
+          this.$router.push('/');
         }
       })
       .catch(err=>console.log(err));
-      
     }
   }
 };
-
-
 </script>
 
 <style>

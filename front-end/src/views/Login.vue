@@ -35,13 +35,11 @@ export default {
       processing: null,
       username: null,
       password: null
-
     }
   },
 
   methods: {
     loginUser() {
-
       let url = `http://localhost:${process.env.VUE_APP_API_PORT}/login`;
       axios.defaults.withCredentials = true;
       axios.post(url, { 
@@ -49,13 +47,15 @@ export default {
         'password': this.password
        })
       .then(response=>{
-        console.log(response);
-        this.$store.commit('isLogged', true);
+        console.log(response.data);
         if(response.data === 'failed') {
           this.error = 'User does not exist. Please regsiter first.';
         }
         else {
-          this.$router.push({name: 'home', params: { username: response.data }});
+          console.log(response.data.token);
+          localStorage.setItem('userToken', response.data.token);
+          localStorage.setItem('userId', response.data._id);
+          this.$router.push('/');
         }
       })
       .catch(err=>console.log(err));
