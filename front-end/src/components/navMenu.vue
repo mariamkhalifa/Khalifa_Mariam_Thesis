@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 export default {
   data() {
     return {
@@ -24,10 +23,8 @@ export default {
 
   methods: {
     logout() {
-      axios.post(`http://localhost:${process.env.VUE_APP_API_PORT}/logout`)
-      .then(()=>{
-        this.$router.push('/login');
-      })
+      localStorage.removeItem('userToken');
+      this.$router.push('/login');
     },
 
     toggleNav() {

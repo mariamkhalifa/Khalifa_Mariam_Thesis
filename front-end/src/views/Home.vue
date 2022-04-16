@@ -38,30 +38,17 @@ export default {
   },
 
   mounted() {
-    // confirm user is logged
-    let isLogged = this.$store.state.isLogged;
+    // confirm auth user
+    let token = localStorage.getItem('userToken');
+    if (!token) {
+      this.$router.push('/login');
+    } else {
+      console.log('authnticated');
+    }
 
-    // if(isLogged === false) {
-    //   this.$router.push('/login');
-    // }
+    
 
-    // confirm authentication
-    axios.get(`http://localhost:${process.env.VUE_APP_API_PORT}/protected`)
-    .then(response=>{
-        //console.log(response.data);
-        // this.username = response.data;
-      })
-    .catch(err=>console.log(err));
-
-    // get user info
-    axios.get(`http://localhost:${process.env.VUE_APP_API_PORT}/user/${this.username}`)
-    .then(response=>{
-        console.log(response.data);
-        this.$store.commit('userId', response.data._id);
-        this.$store.commit('updateTotalPoints', response.data.totalPoints);
-        this.$store.commit('updateCompleted', response.data.completed);
-      })
-    .catch(err=>console.log(err));
+    
   },
 
   methods: {
