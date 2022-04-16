@@ -3,6 +3,7 @@ var router = express.Router();
 var passport = require('passport');
 var User = require('../models/User.js');
 var Lesson = require('../models/Lesson.js');
+var Question = require('../models/Question.js');
 
 
 // user auth routes
@@ -77,6 +78,13 @@ router.post('/user/:id/lesson-end', function(req, res, next) {
   });
 });
 
+// quiz routes
+router.get('/api/quizes/:number', function(req, res, next) {
+  Question.find({ 'quiz' : req.params.number }, function (err, questions) {
+    if (err) return next(err);
+	res.json(questions);
+  });
+});
 
 // student api routes
 router.get('/api/students', function(req, res, next) {

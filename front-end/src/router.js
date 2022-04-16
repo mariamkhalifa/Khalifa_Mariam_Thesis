@@ -25,7 +25,8 @@ export default new Router({
     },
     {
       path: '/quizes',
-      component: Quizes
+      component: Quizes,
+      props: true
     }
 
   ]
