@@ -5,6 +5,7 @@ import Home from "./views/Home.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import Quizes from "./views/Quizes.vue";
+import Profile from "./views/Profile.vue";
 
 Vue.use(Router);
 
@@ -26,6 +27,11 @@ export default new Router({
     {
       path: '/quizes',
       component: Quizes,
+      props: true
+    },
+    {
+      path: '/profile',
+      component: Profile,
       props: true
     }
 

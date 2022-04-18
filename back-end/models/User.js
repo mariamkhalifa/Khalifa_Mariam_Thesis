@@ -31,11 +31,11 @@ var userSchema = new mongoose.Schema({
 	},
 	level: {
 		type: String,
-		default: null
+		default: 'Level 1'
 	},
-	quizScores: {
-		name: { type: String, default: null }, 
-		score: { type: Number, default: null } 
+	quizesPassed: {
+		type: Array,
+		default: null
 	}
 });
 

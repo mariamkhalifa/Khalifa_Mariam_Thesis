@@ -54,21 +54,22 @@ export default {
     margin-left: 60px;
     position: relative;
 
-    &:before {
-      content: 'Lv. 1';
-      position: absolute;
-      top: -5px;
-      left: -35px;
-      font-size: 12px;
-      color: $mediumBlue;
-    }
+    // &:before {
+    //   content: 'Lv. 1';
+    //   position: absolute;
+    //   top: -5px;
+    //   left: -35px;
+    //   font-size: 12px;
+    //   color: $mediumBlue;
+    // }
 
     &:after {
-      content: 'Lv. 2';
+      content: 'Lv. +';
       position: absolute;
       bottom: -5px;
       right: -35px;
-      font-size: 12px;
+      font-size: 14px;
+      font-weight: bold;
       color: $mediumBlue;
     }
 

@@ -13,7 +13,9 @@ const store = new Vuex.Store({
   state: {
     completed: [],
     totalPoints: [],
+    avatar: null,
     dailyPoints: null,
+    level: 'Level 1',
     dailyGoal: null
   },
   mutations: {
@@ -22,6 +24,12 @@ const store = new Vuex.Store({
     },
     updateTotalPoints(state, myData) {
       state.totalPoints = myData;
+    },
+    updateAvatar(state, myData) {
+      state.avatar = myData;
+    },
+    updateLevel(state, myData) {
+      state.level = myData;
     }
   },
   actions: {

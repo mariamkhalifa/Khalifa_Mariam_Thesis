@@ -37,6 +37,12 @@ import axios from 'axios';
 export default {
   props: ['num'],
 
+  computed: {
+    userId() {
+      return localStorage.getItem('userId');
+    }
+  },
+
   data() {
     return {
       questions: [],
@@ -99,11 +105,30 @@ export default {
         //console.log('you passed!');
         this.resultImg = 'party';
         this.resultMessage = 'You Passed!';
+        this.pushPassed();
       } else {
         //console.log('please try again!');
         this.resultImg = 'sad';
         this.resultMessage = 'Sorry you did not pass. You need at least 70%.';
       }
+    },
+
+    pushPassed() {
+      let quizName = `Quiz ${this.num}`;
+      console.log(quizName);
+
+      let url = `http://localhost:${process.env.VUE_APP_API_PORT}/user/${this.userId}/quiz-passed`;
+
+      axios.post(url, {
+        quizName
+      })
+      .then(response=>{
+        console.log(response.data);
+        
+      })
+      .catch(err=>console.log(err));
+      
+  
     },
 
     restartQuiz() {

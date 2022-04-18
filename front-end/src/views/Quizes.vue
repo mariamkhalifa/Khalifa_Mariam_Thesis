@@ -84,7 +84,7 @@ export default {
     text-align: center;
     font-size: 1.3em;
     color: $mediumBlue;
-    margin-top: 30px;
+    margin-top: 60px;
   }
 }
 
@@ -92,17 +92,15 @@ export default {
   @include row;
   width: fit-content;
   gap: 10%;
-  margin: 20px auto;
+  margin: 30px auto 20px;
 }
 
 .quiz-name-con {
   margin: 10px;
-  padding: 20px;
+  padding: 40px 20px;
   width: 150px;
   border-radius: 5px;
-  //background-color: $mediumBlue;
   border: 4px solid $mediumBlue;
-  //color: $white;
   color: $mediumBlue;
   font-weight: bold;
   text-align: center;

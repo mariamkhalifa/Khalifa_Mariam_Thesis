@@ -13,30 +13,23 @@ var Question = require('../models/Question.js');
 
 router.post('/register', async function(req, res, next) {
   try {
-    // raw user input from form
     var username = req.body.username;
     var email = req.body.email;
     var password = req.body.password;
 
-    //check for an existing user with this username before creating a new one
     var oldUser = await User.findOne({ username });
     if (oldUser) {
       return res.send('User Already Exists. Please Login instead.');
     }
 
-//If there is no existing user with that username:
-
-    //Encrypt the plain-text password
     encryptedPassword = await bcrypt.hash(password, 10);
 
-     // Create a new user in database
-     const user = await User.create({
+    const user = await User.create({
       username,
       email,
-      password: encryptedPassword, //no plain-text password saved
+      password: encryptedPassword, 
     });
 
-    // Create signed token
     var token = jwt.sign(
       { user_id: user._id, username },
       'WoolyHamFingers',
@@ -44,34 +37,28 @@ router.post('/register', async function(req, res, next) {
         expiresIn: '2h',
       }
     );
-    // save user token to user object in memory
+
     user.token = token;
 
-    // return new user as JSON
     res.status(201).json(user);
   } catch (err) {
     console.log(err);
   }
-
 });
 
 router.post("/login", async function(req, res, next) {
   try {
-    // raw user input from login form
     var username = req.body.username;
     var password = req.body.password;
 
-    // Validate that both username and password are provided
     if (!(username && password)) {
       res.status(400).send('Username and password both required.');
     }
-    // return the user from the local database
+    
     var user = await User.findOne({ username });
 
-    //bcrypt encrypts the raw password from login and compares the hashed version
-    //with the one saved in the database
     if (user && (await bcrypt.compare(password, user.password))) {
-      // Create token
+      
       var token = jwt.sign(
         { user_id: user._id, username },
         'WoolyHamFingers',
@@ -80,13 +67,10 @@ router.post("/login", async function(req, res, next) {
         }
       );
 
-      // save user token
       user.token = token;
 
-      // return the user as JSON
       res.status(200).json(user);
     }
-    //res.status(400).send("Invalid Credentials");
   } catch (err) {
     console.log(err);
   }
@@ -102,12 +86,12 @@ router.get('/api/lessons', function(req, res, next) {
 });
 
 // user routes
-router.get('/user/:username', function(req, res, next) {
-  User.findOne({ username : req.params.username }, function (err, user) {
-    if (err) return next(err);
-	res.json(user);
-  });
-});
+router.get('/user/:id', function(req, res, next) {
+  User.findById(req.params.id, function (err, user) {
+     if (err) return next(err);
+    res.json(user);
+   });
+ });
 
 router.post('/user/:id/lesson-end', function(req, res, next) {
   User.findOneAndUpdate(
@@ -118,6 +102,25 @@ router.post('/user/:id/lesson-end', function(req, res, next) {
     function (err, post) {
       if (err) return next(err);
       res.json(post);
+  });
+});
+
+router.post('/user/:id/quiz-passed', function(req, res, next) {
+  User.findOneAndUpdate(
+    req.params.id, { 
+      $addToSet: { quizesPassed: req.body.quizName }, 
+      $push: { totalPoints: 5 },
+    }, 
+    function (err, post) {
+      if (err) return next(err);
+      res.json(post);
+  });
+});
+
+router.post('/user/:id/avatar', function(req, res, next) {
+  User.findByIdAndUpdate(req.params.id, { avatar: req.body.avatar }, function (err, post) {
+    if (err) return next(err);
+    res.json(post);
   });
 });
 
