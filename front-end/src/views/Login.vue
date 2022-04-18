@@ -47,13 +47,14 @@ export default {
         'password': this.password
        })
       .then(response=>{
-        console.log(response.data);
+        //console.log(response.data);
         if(response.data === 'failed') {
           this.error = 'User does not exist. Please regsiter first.';
         }
         else {
-          console.log(response.data.token);
+          //console.log(response.data.token);
           localStorage.setItem('userToken', response.data.token);
+          localStorage.setItem('username', response.data.username);
           localStorage.setItem('userId', response.data._id);
           this.$router.push('/');
         }

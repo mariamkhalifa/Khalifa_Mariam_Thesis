@@ -35,13 +35,13 @@ export default {
   .points-con {
     @include row;
     align-items: center;
-    margin-top: 20px;
-    margin-left: 20px;
+    margin-top: 40px;
+    margin-left: 22px;
     font-size: 1.2em;
 
     h4 {
       font-weight: bold;
-      color: $darkBlue;
+      color: $mediumBlue;
     }
   }
 
@@ -49,27 +49,28 @@ export default {
     width: 200px;
     height: 30px;
     border-radius: 5px;
-    border: 2px solid $darkBlue;
+    border: 2px solid $mediumBlue;
     //margin-top: 30px;
-    margin-left: 50px;
+    margin-left: 60px;
     position: relative;
 
-    &:before {
-      content: 'Lv. 1';
-      position: absolute;
-      top: -5px;
-      left: -35px;
-      font-size: 12px;
-      color: $darkBlue;
-    }
+    // &:before {
+    //   content: 'Lv. 1';
+    //   position: absolute;
+    //   top: -5px;
+    //   left: -35px;
+    //   font-size: 12px;
+    //   color: $mediumBlue;
+    // }
 
     &:after {
-      content: 'Lv. 2';
+      content: 'Lv. +';
       position: absolute;
       bottom: -5px;
       right: -35px;
-      font-size: 12px;
-      color: $darkBlue;
+      font-size: 14px;
+      font-weight: bold;
+      color: $mediumBlue;
     }
 
     .total-points {

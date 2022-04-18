@@ -1,27 +1,28 @@
 <template>
   <div>
-  <ul class="lesson-list">
-    <li v-for="(lesson, index) in lessons" :key="index">
-      <h4>{{ lesson.name }}</h4>
-      <img @click="showVideo" :data-video="lesson.video" :data-id="lesson._id" class="video-placeholder" src="/static/video-placeholder4.svg" alt="video icon">
-    </li>
-  </ul>
-  <div v-if="lightbox" ref="lightbox" class="lightbox" :class="{ visible : lightbox }">
-        <div @click="hideVideo" class="close"><p>X</p></div>
-        <video ref="video" class="video" @ended="lessonEnd" controls>
-          <source ref="src1" :src="`/static/any.mp4`" type="video/mp4">
-          <source ref="src2" :src="`/static/any.ogg`" type="video/mp4">
-          Sorry, Your browser does not support video!
-        </video>
+    <ul class="lesson-list">
+      <li v-for="(lesson, index) in lessons" :key="index" :id="lesson._id">
+        <h4>{{ lesson.name }}</h4>
+        <img @click="showVideo" :data-video="lesson.video" :data-id="lesson._id" class="video-placeholder" src="/static/video-placeholder4.svg" alt="video icon">
+      </li>
+    </ul>
+
+    <div v-if="lightbox" ref="lightbox" class="lightbox" :class="{ visible : lightbox }">
+      <div @click="hideVideo" class="close">
+        <p>X</p>
       </div>
+      <video ref="video" class="video" @ended="lessonEnd" controls>
+        <source ref="src1" :src="`/static/any.mp4`" type="video/mp4">
+        <source ref="src2" :src="`/static/any.ogg`" type="video/mp4">
+        Sorry, Your browser does not support video!
+      </video>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 export default {
-  props: ['username'],
-
   data() {
     return {
       lessons: [],
@@ -31,7 +32,7 @@ export default {
 
   computed: {
     userId() {
-      return this.$store.state.userId;
+      return localStorage.getItem('userId');
     },
     completed() {
       return this.$store.state.completed;
@@ -52,7 +53,6 @@ export default {
 
   methods: {
     showVideo() {
-      
       this.lightbox = this.lightbox ? false : true ;
 
       this.$nextTick(()=>{
@@ -85,7 +85,8 @@ export default {
       })
       .then(response=>{
         //console.log(response.data);
-        //event.currentTarget.style.opacity = .5;
+        console.log(document.getElementById(finishedLesson));
+        document.getElementById(finishedLesson).classList.add('complete');
         this.$store.dispatch('addToCompleted', this.finishedLesson);
         this.$store.dispatch('addToTotalPoints', 5);
         this.$emit('updateKey');
@@ -110,12 +111,16 @@ export default {
     li {
       margin: 0 auto;
       width: 300px;
+      position: relative;
     }
 
     h4 {
       text-align: center;
-      position: relative;
-      top: 55px;
+      position: absolute;
+      top: 30px;
+      left: 0;
+      right: 0;
+      margin: auto;
       color: $darkBlue;
       font-size: 1.7em;
       font-weight: bold;
@@ -126,6 +131,10 @@ export default {
       width: 100%;
       cursor: pointer;
     }
+  }
+
+  .complete {
+    background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5));
   }
 
   .lightbox {

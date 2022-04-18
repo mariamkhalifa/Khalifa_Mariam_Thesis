@@ -17,10 +17,17 @@
     <div @click="calculate" class="quiz-submit-btn"><p>Submit Quiz</p></div>
 
     <div v-if="result" class="result">
+      <img class="result-img" :src="`/static/${resultImg}.png`" :alt="resultImg">
       <p class="result-percent">{{ this.percentage }} %</p>
       <p class="result-msg">{{ this.resultMessage }}</p>
-      <div @click="restartQuiz" class="retake-btn"><p>Retake Quiz</p></div>
-      <div @click="endQuiz" class="close-quiz-btn"><p>Close</p></div>
+      <div @click="restartQuiz" class="result-redo-btn">
+        <img src="/static/redo.png" alt="restart">
+        <p>Retake Quiz</p>
+      </div>
+      <div @click="endQuiz" class="result-close-btn">
+        <span>x</span>
+        <p>Close</p>
+      </div>
     </div>
   </div>
 </template>
@@ -29,6 +36,12 @@
 import axios from 'axios';
 export default {
   props: ['num'],
+
+  computed: {
+    userId() {
+      return localStorage.getItem('userId');
+    }
+  },
 
   data() {
     return {
@@ -39,6 +52,7 @@ export default {
       percentage: 0,
       result: false,
       resultMessage: '',
+      resultImg: ''
     }
   },
 
@@ -89,11 +103,32 @@ export default {
 
       if(this.percentage >= 70) {
         //console.log('you passed!');
-        this.resultMessage = 'You Passed!'
+        this.resultImg = 'party';
+        this.resultMessage = 'You Passed!';
+        this.pushPassed();
       } else {
         //console.log('please try again!');
+        this.resultImg = 'sad';
         this.resultMessage = 'Sorry you did not pass. You need at least 70%.';
       }
+    },
+
+    pushPassed() {
+      let quizName = `Quiz ${this.num}`;
+      console.log(quizName);
+
+      let url = `http://localhost:${process.env.VUE_APP_API_PORT}/user/${this.userId}/quiz-passed`;
+
+      axios.post(url, {
+        quizName
+      })
+      .then(response=>{
+        console.log(response.data);
+        
+      })
+      .catch(err=>console.log(err));
+      
+  
     },
 
     restartQuiz() {
@@ -101,7 +136,8 @@ export default {
       this.percentage = 0;
       this.answer = '';
       this.result = false;
-      this.resultMessage = ''
+      this.resultMessage = '';
+      window.scrollTo(0, 0);
     },
 
     endQuiz() {
@@ -109,7 +145,6 @@ export default {
       this.$emit('endQuiz');
     }
   }
-  
 };
 </script>
 
@@ -230,8 +265,83 @@ export default {
     height: 100vh;
     bottom: 0;
     background-color: $white;
+    border-top: 5px solid $lightBlue;
     @include col;
     align-items: center;
+    justify-content: flex-end;
+
+    .result-img {
+      width: 100px;
+    }
+
+    .result-percent {
+      color: $darkBlue;
+      font-weight: bold;
+      font-size: 2em;
+      margin-top: 30px;
+    }
+
+    .result-msg {
+      color: $darkBlue;
+      font-weight: bold;
+      font-size: 1.5em;
+      margin-top: 20px;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .result-redo-btn {
+      margin-top: 30px;
+      @include row;
+      justify-content: space-between;
+      align-items: center;
+      width: 150px;
+      padding: 10px 20px;
+      border-radius: 5px;
+      background-color: $darkBlue;
+      color: $white;
+      font-weight: bold;
+      @include transitionEase;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $lightBlue;
+        transform: translateY(1px);
+      }
+
+      img {
+        width: 28px;
+        margin-right: 15px;
+      }
+    }
+
+    .result-close-btn {
+      margin-top: 30px;
+      margin-bottom: 100px;
+      @include row;
+      //justify-content: space-between;
+      align-items: center;
+      width: 150px;
+      padding: 5px 20px 10px;
+      border-radius: 5px;
+      background-color: $darkBlue;
+      color: $white;
+      font-weight: bold;
+      @include transitionEase;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $lightBlue;
+        transform: translateY(1px);
+      }
+
+      span {
+        font-size: 35px;
+        font-weight: normal;
+        margin-right: 40px;
+        margin-left: 2px;
+      }
+    }
   }
   
 </style>

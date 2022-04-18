@@ -11,25 +11,25 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    isLogged: false,
-    userId: null,
     completed: [],
     totalPoints: [],
+    avatar: null,
     dailyPoints: null,
+    level: 'Level 1',
     dailyGoal: null
   },
   mutations: {
-    isLogged(state, status) {
-      state.isLogged = status;
-    },
-    userId(state, id) {
-      state.userId = id;
-    },
     updateCompleted(state, myData) {
       state.completed = myData;
     },
     updateTotalPoints(state, myData) {
       state.totalPoints = myData;
+    },
+    updateAvatar(state, myData) {
+      state.avatar = myData;
+    },
+    updateLevel(state, myData) {
+      state.level = myData;
     }
   },
   actions: {
