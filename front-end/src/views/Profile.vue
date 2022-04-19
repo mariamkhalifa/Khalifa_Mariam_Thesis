@@ -13,7 +13,9 @@
       
       <total-points-comp></total-points-comp>
 
-      <avatar-form v-if="visible" @hideForm="hideForm" @updateKey="updateKey"></avatar-form>
+      <transition name="fade">
+        <avatar-form v-if="visible" @hideForm="hideForm" @updateKey="updateKey"></avatar-form>
+      </transition>
     </div>
 
     <tabs-menu></tabs-menu>
@@ -44,6 +46,7 @@ export default {
   },
 
   created() {
+    // get user data
     let url = `http://localhost:${process.env.VUE_APP_API_PORT}/user/${this.userId}`;
 
       axios.get(url)
@@ -51,6 +54,7 @@ export default {
         //console.log(response);
         this.user = response.data;
         this.$store.commit('updateAvatar', this.user.avatar);
+        this.$store.commit('updateTotalPoints', this.user.totalPoints);
       })
       .catch(err=>console.log(err));
   },
@@ -101,6 +105,7 @@ export default {
   .profile-con {
     margin-top: 80px;
     margin-left: 20px;
+    margin-bottom: 150px;
     padding-top: 20px;
 
     h3, p {
@@ -128,6 +133,15 @@ export default {
       opacity: .8;
       transform: translateY(.5px);
     }
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: all .3s ease-in-out;
+  }
+
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+    transform: translateY(-50px)
   }
 
   @media screen and (min-width:700px) {

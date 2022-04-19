@@ -21,11 +21,9 @@ export default {
     }
   },
 
-  mounted() {
+  beforeUpdate() {
     this.$refs.bar.style.width = `${this.totalPoints}%`;
-  }
-
-  
+  } 
 };
 </script>
 

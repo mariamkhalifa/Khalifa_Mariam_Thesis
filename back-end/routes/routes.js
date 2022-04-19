@@ -85,6 +85,13 @@ router.get('/api/lessons', function(req, res, next) {
   });
 });
 
+router.post('/api/lessons/:id/completed', function(req, res, next) {
+  Lesson.findByIdAndUpdate(req.params.id, { completed: true } , function (err, post) {
+    if (err) return next(err);
+  res.json(post);
+  });
+});
+
 // user routes
 router.get('/user/:id', function(req, res, next) {
   User.findById(req.params.id, function (err, user) {

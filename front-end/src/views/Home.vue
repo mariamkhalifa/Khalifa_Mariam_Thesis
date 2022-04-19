@@ -3,7 +3,7 @@
     <header-comp></header-comp>
     
     <h2 class="hidden">Home</h2>
-    <h3 class="welcome-msg">Hello {{ username}}</h3>
+    <h3 class="welcome-msg">Hello {{ username }}</h3>
 
     <tabs-menu></tabs-menu>
 
@@ -24,14 +24,33 @@ export default {
   computed: {
     username() {
       return localStorage.getItem('username');
+    },
+    userId() {
+      return localStorage.getItem('userId');
     }
   },
 
+  created() {
+    // get user data
+    let url = `http://localhost:${process.env.VUE_APP_API_PORT}/user/${this.userId}`;
+
+    axios.get(url)
+    .then(response=>{
+      //console.log(response.data);
+      this.$store.commit('updateCompleted', response.data.completed);
+      this.$store.commit('updateTotalPoints', response.data.totalPoints);
+      this.$store.commit('updateLevel', response.data.level);
+    })
+    .catch(err=>{
+      console.log(err);
+    })
+  },
+
   components: {
-      headerComp,
-      tabsMenu,
-      allLessons,
-      totalPointsComp
+    headerComp,
+    tabsMenu,
+    allLessons,
+    totalPointsComp
   },
 
   data() {

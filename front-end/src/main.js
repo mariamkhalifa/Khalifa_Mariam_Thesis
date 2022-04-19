@@ -16,7 +16,6 @@ const store = new Vuex.Store({
     avatar: null,
     dailyPoints: null,
     level: 'Level 1',
-    dailyGoal: null
   },
   mutations: {
     updateCompleted(state, myData) {
