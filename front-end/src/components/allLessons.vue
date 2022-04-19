@@ -69,16 +69,11 @@ export default {
     },
 
     hideVideo() {
-      console.log('clicked');
+      //console.log('clicked');
       this.lightbox = this.lightbox ? false : true ;
     },
 
     lessonEnd() {
-      //console.log('ended');
-      //console.log(event.currentTarget);
-
-      //console.log(this.userId);
-      //console.log(event.currentTarget.dataset.lesson);
       let finishedLesson = event.currentTarget.dataset.lesson;
 
       // update user
@@ -89,7 +84,6 @@ export default {
       })
       .then(response=>{
         //console.log(response.data);
-        //console.log(document.getElementById(finishedLesson));
         document.getElementById(finishedLesson).classList.add('complete');
         this.$store.dispatch('addToCompleted', finishedLesson);
         this.$store.dispatch('addToTotalPoints', 5);
@@ -104,8 +98,7 @@ export default {
         completed: true
       })
       .then(response=>{
-        console.log(response);
-        
+        //console.log(response);
       })
       .catch(err=>console.log(err));
     }
@@ -166,6 +159,7 @@ export default {
       top: 0;
       left: 0;
       width: 100vw;
+      height: 100vh;
       padding-bottom: 80px;
       z-index: 20;
       background-color: rgba($color: $darkBlue, $alpha: .3);

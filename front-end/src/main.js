@@ -15,7 +15,7 @@ const store = new Vuex.Store({
     totalPoints: [],
     avatar: null,
     dailyPoints: null,
-    level: 'Level 1',
+    level: 1
   },
   mutations: {
     updateCompleted(state, myData) {
@@ -41,7 +41,12 @@ const store = new Vuex.Store({
       const totalPoints = context.state.totalPoints;
       totalPoints.push(payload);
       context.commit('updateTotalPoints', totalPoints);
-    } 
+    },
+    addToLevel(context){
+      const level = context.state.level;
+      level++
+      context.commit('updatelevel', level);
+    }
   }
 });
 

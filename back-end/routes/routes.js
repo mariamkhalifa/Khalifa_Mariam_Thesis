@@ -131,6 +131,13 @@ router.post('/user/:id/avatar', function(req, res, next) {
   });
 });
 
+router.post('/user/:id/level-up', function(req, res, next) {
+  User.findByIdAndUpdate(req.params.id, { level: req.body.level, totalPoints: 0 }, function (err, post) {
+    if (err) return next(err);
+    res.json(post);
+  });
+});
+
 // quiz routes
 router.get('/api/quizes/:number', function(req, res, next) {
   Question.find({ 'quiz' : req.params.number }, function (err, questions) {

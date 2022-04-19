@@ -30,8 +30,8 @@ var userSchema = new mongoose.Schema({
 		default: null
 	},
 	level: {
-		type: String,
-		default: 'Level 1'
+		type: Number,
+		default: 1
 	},
 	quizesPassed: {
 		type: Array,

@@ -9,7 +9,7 @@
       <img @click="showForm" class="edit-avatar" src="/static/edit.png" alt="pen icon">
       <h3>{{ username }}</h3>
 
-      <p>{{ this.userLevel }}</p>
+      <p>Level: {{ this.userLevel }}</p>
       
       <total-points-comp></total-points-comp>
 

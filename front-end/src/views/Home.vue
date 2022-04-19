@@ -4,6 +4,7 @@
     
     <h2 class="hidden">Home</h2>
     <h3 class="welcome-msg">Hello {{ username }}</h3>
+    <p class="welcome-level">Level {{ this.userLevel }}</p>
 
     <tabs-menu></tabs-menu>
 
@@ -27,6 +28,9 @@ export default {
     },
     userId() {
       return localStorage.getItem('userId');
+    },
+    userLevel() {
+      return this.$store.state.level;
     }
   },
 
@@ -71,6 +75,7 @@ export default {
   methods: {
     updateKey() {
       this.key ++;
+      //console.log(this.key);
     }
   }
 };
@@ -82,6 +87,14 @@ export default {
     margin-left: 20px;
     margin-top: 40px;
     font-size: 1.5em;
+    font-weight: bold;
+    color: $darkBlue;
+  }
+
+  .welcome-level {
+    margin-left: 20px;
+    margin-top: 20px;
+    font-size: 1.2em;
     font-weight: bold;
     color: $mediumBlue;
   }
