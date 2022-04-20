@@ -1,7 +1,7 @@
 <template>
   <div>
     <header-comp></header-comp>
-
+    
     <section class="quiz-main">
       <h2>Quizes</h2>
       <p class="quiz-list-title">Pick a quiz...</p>
@@ -18,10 +18,11 @@
       </ul>
 
       <div class="quiz-btn" @click="startQuiz"><p>Start Quiz</p></div>
-      <quiz v-if="quiz" :num="this.quizNum" @endQuiz="endQuiz"></quiz>
-      
-    </section>
 
+      <quiz v-if="quiz" :num="this.quizNum" @endQuiz="endQuiz"></quiz>
+
+    </section>
+    
     <tabs-menu></tabs-menu>
   </div>
 </template>

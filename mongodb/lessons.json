@@ -2,16 +2,19 @@
 	{
 		"name": "Alphabets",
 		"unit": 1,
-		"video": "alphabet"
+		"video": "alphabet",
+		"completed": false
 	},
 	{
 		"name": "Numbers 1-10",
 		"unit": 1,
-		"video": "numbers-1-10"
+		"video": "numbers-1-10",
+		"completed": false
 	},
 	{
 		"name": "Numbers 11-20",
 		"unit": 1,
-		"video": "numbers-11-20"
+		"video": "numbers-11-20",
+		"completed": false
 	}
 ]

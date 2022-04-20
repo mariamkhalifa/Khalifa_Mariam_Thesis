@@ -34,6 +34,8 @@ export default new Router({
       component: Profile,
       props: true
     }
-
-  ]
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    return { top: 0 }
+  },
 });

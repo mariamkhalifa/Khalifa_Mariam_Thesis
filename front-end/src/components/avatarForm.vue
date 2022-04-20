@@ -1,4 +1,5 @@
 <template>
+<transition name="fade">
   <form class="avatar-form">
     <span @click="closeForm" class="close-form">x</span>
     <label for="avatar">Pick Your Avatar</label>
@@ -16,6 +17,7 @@
 
     <input @click.prevent="addAvatar" type="submit" value="Submit">
   </form>
+</transition>
 </template>
 
 <script>
@@ -160,6 +162,15 @@ export default {
         transform: translateY(1px);
       }
     }
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: all .3s ease-in-out;
+  }
+
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+    transform: translateY(-50px)
   }
  
   

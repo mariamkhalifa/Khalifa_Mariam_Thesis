@@ -1,35 +1,39 @@
 <template>
-  <div class="quiz-con">
-    <div class="close-quiz">X</div>
-    <h3>Quiz {{ this.num }}</h3>
+  <transition name="fade">
+    <div class="quiz-con">
+      <div @click="endQuiz" class="close-quiz">X</div>
+      <h3>Quiz {{ this.num }}</h3>
 
-    <ul class="questions-con">
-      <li class="question" v-for="(question, index) in questions" :key="index">
-        <p>{{ question.question }}</p>
-        <img :src="`/static/${question.img}`" alt="sign">
-        <form>
-          <input type="text" v-model="answer">
-          <input @click.prevent="checkAnswer" :data-answer="question.answer" type="submit" value="Submit">
-        </form>
-      </li>
-    </ul>
+      <ul class="questions-con">
+        <li class="question" v-for="(question, index) in questions" :key="index">
+          <p>{{ question.question }}</p>
+          <img :src="`/static/${question.img}`" alt="sign">
+          <form>
+            <input type="text" v-model="answer">
+            <input @click.prevent="checkAnswer" :data-answer="question.answer" type="submit" value="Submit">
+          </form>
+        </li>
+      </ul>
 
-    <div @click="calculate" class="quiz-submit-btn"><p>Submit Quiz</p></div>
+      <div @click="calculate" class="quiz-submit-btn"><p>Submit Quiz</p></div>
 
-    <div v-if="result" class="result">
-      <img class="result-img" :src="`/static/${resultImg}.png`" :alt="resultImg">
-      <p class="result-percent">{{ this.percentage }} %</p>
-      <p class="result-msg">{{ this.resultMessage }}</p>
-      <div @click="restartQuiz" class="result-redo-btn">
-        <img src="/static/redo.png" alt="restart">
-        <p>Retake Quiz</p>
-      </div>
-      <div @click="endQuiz" class="result-close-btn">
-        <span>x</span>
-        <p>Close</p>
-      </div>
+      <transition name="fade">
+        <div v-if="result" class="result">
+          <img class="result-img" :src="`/static/${resultImg}.png`" :alt="resultImg">
+          <p class="result-percent">{{ this.percentage }} %</p>
+          <p class="result-msg">{{ this.resultMessage }}</p>
+          <div @click="restartQuiz" class="result-redo-btn">
+            <img src="/static/redo.png" alt="restart">
+            <p>Retake Quiz</p>
+          </div>
+          <div @click="endQuiz" class="result-close-btn">
+            <span>x</span>
+            <p>Close</p>
+          </div>
+        </div>
+      </transition>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -106,6 +110,8 @@ export default {
         this.resultImg = 'party';
         this.resultMessage = 'You Passed!';
         this.pushPassed();
+        this.pushPoints();
+        this.$store.dispatch('addToTotalPoints', 5);
       } else {
         //console.log('please try again!');
         this.resultImg = 'sad';
@@ -115,7 +121,7 @@ export default {
 
     pushPassed() {
       let quizName = `Quiz ${this.num}`;
-      console.log(quizName);
+      //console.log(quizName);
 
       let url = `http://localhost:${process.env.VUE_APP_API_PORT}/user/${this.userId}/quiz-passed`;
 
@@ -123,12 +129,9 @@ export default {
         quizName
       })
       .then(response=>{
-        console.log(response.data);
-        
+        //console.log(response.data);
       })
       .catch(err=>console.log(err));
-      
-  
     },
 
     restartQuiz() {
@@ -197,7 +200,7 @@ export default {
     }
 
     img {
-      width: 200px;
+      width: 250px;
       margin-top: 20px;
       margin-bottom: 20px;
     }
@@ -208,6 +211,7 @@ export default {
 
       input[type=text] {
         padding: 8px;
+        width: 236px;
         border-radius: 4px;
         font-size: 1.1em;
         color: $grey;
@@ -342,6 +346,15 @@ export default {
         margin-left: 2px;
       }
     }
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: all .3s ease-in-out;
+  }
+
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+    transform: translateY(-50px)
   }
   
 </style>

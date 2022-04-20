@@ -85,6 +85,13 @@ router.get('/api/lessons', function(req, res, next) {
   });
 });
 
+router.post('/api/lessons/:id/completed', function(req, res, next) {
+  Lesson.findByIdAndUpdate(req.params.id, { completed: true } , function (err, post) {
+    if (err) return next(err);
+  res.json(post);
+  });
+});
+
 // user routes
 router.get('/user/:id', function(req, res, next) {
   User.findById(req.params.id, function (err, user) {
@@ -119,6 +126,13 @@ router.post('/user/:id/quiz-passed', function(req, res, next) {
 
 router.post('/user/:id/avatar', function(req, res, next) {
   User.findByIdAndUpdate(req.params.id, { avatar: req.body.avatar }, function (err, post) {
+    if (err) return next(err);
+    res.json(post);
+  });
+});
+
+router.post('/user/:id/level-up', function(req, res, next) {
+  User.findByIdAndUpdate(req.params.id, { level: req.body.level, totalPoints: 0 }, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
