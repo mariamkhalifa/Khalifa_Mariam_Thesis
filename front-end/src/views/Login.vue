@@ -1,26 +1,24 @@
 <template>
-  <section>
+  <section class="user-auth-con">
+    <img class="logo" src="/static/logo2.svg" alt="logo">
     <h2 class="main-heading">Login</h2>
 
     <form ref="loginForm" method="POST">
 
       <p>{{ error }}</p>
 
-      <div class="form-group">
-        <label for="username">Username:</label>
-        <input v-model="username" id="username" name="username" type="text" placeholder="Enter your username...">
-      </div>
+      <label for="username">Username:</label>
+      <input v-model="username" id="username" name="username" type="text" placeholder="Enter your username...">
 
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input v-model="password" id="password" name="password" type="password" placeholder="Enter your password...">
-      </div>
+      <label for="password">Password:</label>
+      <input v-model="password" id="password" name="password" type="password" placeholder="Enter your password...">
 
       <input @click.prevent="loginUser" type="submit" value="Login">
 
+      <router-link class="register-link" to="/register">Are you new? Create Account...</router-link>
     </form>
 
-    <router-link to="/register">Register instead?</router-link>
+    
   </section>
     
 </template>
@@ -64,10 +62,21 @@ export default {
     }
   }
 };
-
-
 </script>
 
-<style>
+<style lang="scss">
+@import './../assets/sass/vars.scss';
 
+  .register-link {
+    margin-top: 20px;
+    color: $mediumBlue;
+    text-align: left;
+    align-self: flex-start;
+    @include transitionEase;
+
+    &:hover {
+      color: $grey;
+      text-decoration: underline;
+    }
+  }
 </style>

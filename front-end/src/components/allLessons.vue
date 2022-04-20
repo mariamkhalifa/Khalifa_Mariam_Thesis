@@ -141,7 +141,15 @@ export default {
   }
 
   .complete {
-    background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5));
+    &:after {
+      content: '';
+      background: url('/static/tick.png') no-repeat center;
+      position: absolute;
+      bottom: -25px;
+      right: -20px;
+      width: 50px;
+      height: 50px;
+    }
   }
 
   .watched {
